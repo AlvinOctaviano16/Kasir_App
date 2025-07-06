@@ -1,0 +1,48 @@
+
+-- Table Item
+CREATE TABLE "item"(
+    "id_item" INTEGER NOT NULL,
+    "kode_item" TEXT NOT NULL UNIQUE,
+    "nama_item" TEXT NOT NULL,
+    "harga_item" INTEGER NOT NULL,
+    "stock_item" INTEGER NOT NULL,
+    PRIMARY KEY("id_item" AUTOINCREMENT)
+);
+
+-- Table User
+CREATE TABLE "user"(
+    "id_user" INTEGER NOT NULL,
+    "user_name" TEXT NOT NULL UNIQUE,
+    "hash_password" TEXT NOT NULL,
+    "role" TEXT NOT NULL,
+    PRIMARY KEY("id_user" AUTOINCREMENT)
+);
+
+-- Table Transaksi
+CREATE TABLE "transaksi"(
+    "id_transaksi" INTEGER NOT NULL,
+    "timestamp_transaksi" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "total_nominal_transaksi" INTEGER NOT NULL,
+    "id_user" INTEGER NOT NULL,
+    "status_transaksi" TEXT NOT NULL DEFAULT "selesai",
+    PRIMARY KEY("id_transaksi" AUTOINCREMENT),
+    FOREIGN KEY("id_user") REFERENCES "user"("id_user") 
+);
+
+-- Table Detail Transaksi (Barang apa saja yang dibeli)
+CREATE TABLE "detail_transaksi"(
+    "id_detail_transaksi" INTEGER NOT NULL,
+    "id_transaksi" INTEGER NOT NULL,
+    "id_item" INTEGER NOT NULL,
+    "jumlah_item" INTEGER NOT NULL,
+    "nominal_saat_transaksi" INTEGER NOT NULL,
+    PRIMARY KEY("id_detail_transaksi" AUTOINCREMENT),
+    FOREIGN KEY ("id_transaksi") REFERENCES "transaksi"("id_transaksi"),
+    FOREIGN KEY ("id_item") REFERENCES "item"("id_item")
+);
+
+INSERT INTO item(kode_item,nama_item,harga_item,stock_item)VALUES
+("S0001","Sekrup T",2500,1250),
+("S0002","Sekrup B",2000,1000),
+("O0003","Obeng T",10000,100),
+("O0001","Obeng B",15000,50);
