@@ -67,12 +67,48 @@ def delete_item(kode:str):
             connection.close()
     return False 
 
-if __name__=="__main__":
-    print("Testing fungsi terbaru")
-    add_item("O0003","Obeng A",11000,25)
-    delete_item("O0003")
-    products=get_all_item()
+def menambah_stock(kode:str,sum:int):
+    """Fungsi untuk menambah stock"""
+    connection=create_Connection()
+    if connection is not None:
+        try:
+            kursor=connection.cursor()
+            query="UPDATE item SET stock_item=stock_item+(?) WHERE kode_item=(?)"
+            kursor.execute(query,(sum,kode))
+            connection.commit()
+            return True
+        except sqlite3.Error as e:
+            print(f"Error saat menambahkan stock {kode} : {e}")
+            return False
+        finally:
+            connection.close()
+    return False
 
+def mengurangi_stock(kode:str,sum:int):
+    """Fungsi untuk menambah stock"""
+    connection=create_Connection()
+    if connection is not None:
+        try:
+            kursor=connection.cursor()
+            query="UPDATE item SET stock_item=stock_item-(?) WHERE kode_item=(?) AND stock_item>=(?)"
+            kursor.execute(query,(sum,kode,sum))
+            connection.commit()
+            if kursor.rowcount>0:
+                print(f"Berhasil mengurangi stock item {kode}")
+                return True
+            else:
+                print(f"Gagal mengurangi stock item {kode}. Stock mungkin tidak mencukupi")
+                return False
+        except sqlite3.Error as e:
+            print(f"Error saat mengurangi stock {kode} : {e}")
+            return False
+        finally:
+            connection.close()
+    return False
+
+if __name__=="__main__":
+    menambah_stock("S0001",1)
+    products=get_all_item()
     if products:
         print("Berhasil mengambil data ...")
         for it in products:
