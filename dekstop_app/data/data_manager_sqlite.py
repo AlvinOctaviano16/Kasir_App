@@ -30,6 +30,18 @@ def get_all_item():
             connection.close()
     return []
 
+def menampilkan_item(database:list):
+    """Fungsi menampilkan semua item"""
+    if database:
+        print("Menampilkan semua informasi item")
+        for it in database:
+            _id_item,kode_item,nama_item,harga_item,stock_item=it
+            print(f"|{kode_item:{10}} | {nama_item:{10}}  | {harga_item:{10}} | {stock_item:{10}}|")
+        return True
+    else:
+        print("Tidak ada sama sekali item yang tercatat di database")
+    return False
+
 def add_item(kode:str,nama:str,harga:int,stock:int):
     """Fungsi menambahkan item baru ke database"""
     connection=create_Connection();
@@ -106,12 +118,29 @@ def mengurangi_stock(kode:str,sum:int):
             connection.close()
     return False
 
+def mencari_item(kode:str):
+    """Fungsi mencari item secara spesifik berdasarkan kode_item"""
+    connection=create_Connection()
+    if connection is not None:
+        try:
+            # connection.row_factory=sqlite3.Row 
+            kursor=connection.cursor()
+            query="SELECT * FROM item WHERE kode_item=(?)"
+            kursor.execute(query,(kode,))
+            output=kursor.fetchone()
+            if output:
+                return output
+            else:
+                return None
+        except sqlite3.Error as e:
+            print(f"Gagal melakukan pencarian : {e}")
+            return None
+        finally:
+            connection.close()
+    return None
+
 if __name__=="__main__":
-    menambah_stock("S0001",1)
-    products=get_all_item()
-    if products:
-        print("Berhasil mengambil data ...")
-        for it in products:
-            print(it)
-    else:
-        print("Gagal mengambil data ...")
+    # products=get_all_item()
+    # menampilkan_item(products)
+    x=mencari_item("S0001")
+    
