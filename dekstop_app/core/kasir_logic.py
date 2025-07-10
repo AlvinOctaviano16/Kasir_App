@@ -10,6 +10,9 @@ def register_new_user(username:str,password:str,role:str):
     password_bytes=password.encode('utf-8')
     salt=bcrypt.gensalt()
     hasil_hashed=bcrypt.hashpw(password_bytes,salt)
-    
+
     connection=db.add_user(username,hasil_hashed,role)
     return connection
+
+def verifikasi_login():
+    return

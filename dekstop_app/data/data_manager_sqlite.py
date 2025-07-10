@@ -13,9 +13,6 @@ def create_Connection():
         print(e)
     return connection
 
-def user_add(username,):
-    """Fungsi untuk menambahkan user"""
-    return
 def get_all_item():
     """Mengambil semua item pada tabel database item"""
     connection=create_Connection()
@@ -43,8 +40,15 @@ def add_item(kode:str,nama:str,harga:int,stock:int):
             kursor.execute(query, (kode,nama,harga,stock))
             connection.commit()
 
-            print(f"Item {nama} berhasil ditambahkan")
-            return True
+            if kursor.rowcount>0:
+                print(f"Item {nama} berhasil ditambahkan")
+                return True
+            else:
+                print(f"Gagal menambahkan item {nama}")
+                return False
+        except sqlite3.IntegrityError:
+            print(f"Error: Kode item {kode} sudah ada di database. Gunakan kode lain")
+            return False
         except sqlite3.Error as e:
             print(f"Error saat menambahkan item : {e}")
             return False
@@ -62,8 +66,13 @@ def delete_item(kode:str):
             query="DELETE FROM item WHERE kode_item=?"
             kursor.execute(query,(kode,))
             connection.commit()
-            print(f"Item dengan kode {kode} berhasil dihapus")
-            return True
+            if kursor.rowcount>0:
+                print(f"Item dengan kode {kode} berhasil dihapus")
+                return True
+            else:
+                print(f"Gagal menghapus item {kode}")
+                return False
+            
         except sqlite3.Error as e:
             print(f"Error saat menghapus item : {e}")
             return False
@@ -81,7 +90,12 @@ def menambah_stock(kode:str,sum:int):
             query="UPDATE item SET stock_item=stock_item+(?) WHERE kode_item=(?)"
             kursor.execute(query,(sum,kode))
             connection.commit()
-            return True
+            if kursor.rowcount>0:
+                print(f"Berhasil menambahkan stock item dengan kode {kode} sebanyak {sum}")
+                return True
+            else:
+                print(f"Gagal menambahkan stock item dengan kode {kode} sebanyak ")
+                return False
         except sqlite3.Error as e:
             print(f"Error saat menambahkan stock {kode} : {e}")
             return False
@@ -145,7 +159,12 @@ def add_user(username:str,hashed_password:bytes,role:str):
             kursor.execute(query,(username,hashed_password,role))
             print(f"Berhasil menambahkan {username} ke database")
             connection.commit()
-            return True
+            if kursor.rowcount>0:
+                print(f"Berhasil menambahkan user dengan username {username}")
+                return True
+            else:
+                print(f"Gagal menambahkan user dengan username {username}")
+                return False
         except sqlite3.IntegrityError:
             print(f"Error : username {username} sudah digunakan")
         except sqlite3.Error as e:
@@ -155,6 +174,26 @@ def add_user(username:str,hashed_password:bytes,role:str):
             if connection:
                 connection.close()
     return False
+
+def cari_user(username:str):
+    connection=create_Connection()
+    if connection is not None:
+        try:
+            kursor=connection.cursor()
+            query="SELECT * FROM user WHERE user_name=(?)"
+            kursor.execute(query,(username,))
+            output=kursor.fetchone()
+            if output:
+                return output
+            else:
+                return None
+        except sqlite3.Error as e:
+            print(f"Tidak dapat menemukan {username} : {e}")
+            return None
+        finally:
+            if connection:
+                connection.close()
+    return None
             
 def create_new_transaction(transaksi:list):
 
