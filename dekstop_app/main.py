@@ -4,7 +4,7 @@ from core import kasir_logic as cr
 import bcrypt
 
 def main():
-    cr.register_new_user("Alvin Octaviano","Octaviano1907","Developer")
+    cr.verifikasi_login("Alvin Octaviano","Octaviano1907")
 
     """Fungsi main untuk melakukan testing"""
     
