@@ -144,6 +144,7 @@ def add_user(username:str,hashed_password:bytes,role:str):
             query= "INSERT INTO user(user_name,hash_password,role) VALUES (?,?,?)"
             kursor.execute(query,(username,hashed_password,role))
             print(f"Berhasil menambahkan {username} ke database")
+            connection.commit()
             return True
         except sqlite3.IntegrityError:
             print(f"Error : username {username} sudah digunakan")
@@ -156,7 +157,7 @@ def add_user(username:str,hashed_password:bytes,role:str):
     return False
             
 def create_new_transaction(transaksi:list):
-    
+
     return
 
 
