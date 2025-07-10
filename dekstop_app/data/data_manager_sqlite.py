@@ -13,6 +13,9 @@ def create_Connection():
         print(e)
     return connection
 
+def user_add(username,):
+    """Fungsi untuk menambahkan user"""
+    return
 def get_all_item():
     """Mengambil semua item pada tabel database item"""
     connection=create_Connection()
@@ -26,21 +29,9 @@ def get_all_item():
             print(f"Error saat mengambil data item : {e}")
             return []
         finally:
-            #Menutup koneksi
-            connection.close()
+            if connection:
+                connection.close()
     return []
-
-def menampilkan_item(database:list):
-    """Fungsi menampilkan semua item"""
-    if database:
-        print("Menampilkan semua informasi item")
-        for it in database:
-            _id_item,kode_item,nama_item,harga_item,stock_item=it
-            print(f"|{kode_item:{10}} | {nama_item:{10}}  | {harga_item:{10}} | {stock_item:{10}}|")
-        return True
-    else:
-        print("Tidak ada sama sekali item yang tercatat di database")
-    return False
 
 def add_item(kode:str,nama:str,harga:int,stock:int):
     """Fungsi menambahkan item baru ke database"""
@@ -58,7 +49,8 @@ def add_item(kode:str,nama:str,harga:int,stock:int):
             print(f"Error saat menambahkan item : {e}")
             return False
         finally :
-            connection.close()
+            if connection:
+                connection.close()
     return False
 
 def delete_item(kode:str):
@@ -76,7 +68,8 @@ def delete_item(kode:str):
             print(f"Error saat menghapus item : {e}")
             return False
         finally:
-            connection.close()
+            if connection:
+                connection.close()
     return False 
 
 def menambah_stock(kode:str,sum:int):
@@ -93,7 +86,8 @@ def menambah_stock(kode:str,sum:int):
             print(f"Error saat menambahkan stock {kode} : {e}")
             return False
         finally:
-            connection.close()
+            if connection:
+                connection.close()
     return False
 
 def mengurangi_stock(kode:str,sum:int):
@@ -115,7 +109,8 @@ def mengurangi_stock(kode:str,sum:int):
             print(f"Error saat mengurangi stock {kode} : {e}")
             return False
         finally:
-            connection.close()
+            if connection:
+                connection.close()
     return False
 
 def mencari_item(kode:str):
@@ -136,11 +131,32 @@ def mencari_item(kode:str):
             print(f"Gagal melakukan pencarian : {e}")
             return None
         finally:
-            connection.close()
+            if connection:
+                connection.close()
     return None
 
-if __name__=="__main__":
-    # products=get_all_item()
-    # menampilkan_item(products)
-    x=mencari_item("S0001")
+def add_user(username:str,hashed_password:bytes,role:str):
+    """Fungsi untuk menambahkan user ke database"""
+    connection=create_Connection()
+    if connection is not None:
+        try:
+            kursor=connection.cursor()
+            query= "INSERT INTO user(user_name,hash_password,role) VALUES (?,?,?)"
+            kursor.execute(query,(username,hashed_password,role))
+            print(f"Berhasil menambahkan {username} ke database")
+            return True
+        except sqlite3.IntegrityError:
+            print(f"Error : username {username} sudah digunakan")
+        except sqlite3.Error as e:
+            print(f"Gagal menambahkan {username} ke database : {e}")
+            return False
+        finally:
+            if connection:
+                connection.close()
+    return False
+            
+def create_new_transaction(transaksi:list):
     
+    return
+
+
