@@ -1,0 +1,21 @@
+QWidget {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    font-family: Segoe UI;
+    font-size: 10pt;
+}
+QPushButton {
+    background-color: #5865F2; /* Warna ungu Discord */
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+}
+QPushButton:hover {
+    background-color: #4f5bda;
+}
+QLineEdit {
+    background-color: #383838;
+    border: 1px solid #555555;
+    padding: 6px;
+    border-radius: 5px;
+}
