@@ -2,13 +2,14 @@ QWidget {
     background-color: #2b2b2b;
     color: #ffffff;
     font-family: Segoe UI;
-    font-size: 10pt;
+    font-size: 12pt;
 }
 QPushButton {
     background-color: #5865F2; /* Warna ungu Discord */
     border: none;
     padding: 8px;
     border-radius: 5px;
+    margin: 10px 25px 0px 25px;
 }
 QPushButton:hover {
     background-color: #4f5bda;
@@ -18,4 +19,17 @@ QLineEdit {
     border: 1px solid #555555;
     padding: 6px;
     border-radius: 5px;
+    margin: 0px 25px;
 }
+
+QLabel{
+    /* font-size:12pt; */
+    margin: 0px 25px;
+} 
+
+QLabel#login_tittle{
+    font-size: 35pt;
+    font-weight:bold;
+    
+}
+

@@ -12,7 +12,7 @@ class LoginWindow:
         self.ui.setWindowTitle("Login Aplikasi Kasir")
 
         #Mengunci ukuran window
-        self.ui.setFixedSize(800,600)
+        self.ui.setFixedSize(600,400)
     
     def show(self):
         """Fungsi untuk menampilkan window"""
