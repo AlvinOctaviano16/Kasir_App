@@ -1,1 +1,2 @@
-from .theme_loader import load_theme
+from .theme_loader import *
+from .kasir_logic import *

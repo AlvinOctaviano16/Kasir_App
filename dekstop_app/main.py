@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import QApplication
-from ui.login_window import LoginWindow
-from data.data_manager_sqlite import *
-from ui.console_view import *
-from core.kasir_logic import *
+from ui import LoginWindow
+from data import *
+from ui import *
+from core import verifikasi_login
 from core import load_theme
 import bcrypt
 import sys
