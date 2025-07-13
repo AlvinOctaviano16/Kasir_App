@@ -13,8 +13,11 @@ def menampilkan_banyak_item(database:list):
 def menampilkan_satu_item(database:tuple):
     """Fungsi untuk menampilkan satu item"""
     if(database):
-        print(database)
+        id_item,kode_item,nama_item,harga_item,stock_item=database
+        print(f"|{kode_item:{10}} | {nama_item:{10}}  | {harga_item:{10}} | {stock_item:{10}}|")
         return True
     else:
-        print("Item tersebu tidak dapat ditemukan")
+        print("Item tersebt tidak dapat ditemukan")
     return False
+
+    

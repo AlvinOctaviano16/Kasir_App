@@ -127,7 +127,7 @@ def mengurangi_stock(kode:str,sum:int):
                 connection.close()
     return False
 
-def mencari_item(kode:str):
+def mencari_item_kode(kode:str):
     """Fungsi mencari item secara spesifik berdasarkan kode_item"""
     connection=create_Connection()
     if connection is not None:
@@ -149,6 +149,50 @@ def mencari_item(kode:str):
                 connection.close()
     return None
 
+def mencari_item_name(item_name:str):
+    """Fungsi mencari item secara spesifik berdasarkan nama_item"""
+    connection=create_Connection()
+    if connection is not None:
+        try:
+            connection.row_factory=sqlite3.Row
+            kursor=connection.cursor()
+            query="SELECT * FROM item WHERE nama_item=(?)"
+            kursor.execute(query,(item_name,))
+            output=kursor.fetchone()
+            if output:
+                return output
+            else :
+                return None
+        except sqlite3.Error as e:
+            print(f"Gagal melakukan pencarian : {e}")
+            return None
+        finally:
+            if connection:
+                connection.close()
+    return
+
+def mencari_item_kategori(kategori_name:str):
+    """Fungsi untuk mencari item berdasarkan kategori"""
+    connection=create_Connection()
+    if connection is not None:
+        try:
+            connection.row_factory=sqlite3.Row
+            kursor=connection.cursor()
+            query="SELECT * FROM item WHERE nama_item LIKE ?"
+            item=f'%{kategori_name}%'
+            kursor.execute(query,(item,))
+            output=kursor.fetchall()
+            if output:
+                return output
+            else:
+                return []
+        except sqlite3.Error as e:
+            print(f"Gagal melakukan pencarian : {e}")
+            return []
+        finally:
+            if connection:
+                connection.close()
+    return []
 def add_user(username:str,hashed_password:bytes,role:str):
     """Fungsi untuk menambahkan user ke database"""
     connection=create_Connection()
