@@ -10,7 +10,7 @@ def menampilkan_banyak_item(database:list):
         print("Tidak ada sama sekali item yang tercatat di database")
     return False
 
-def menampilkan_satu_item(database:tuple):
+def menampilkan_satu_item(database:dict):
     """Fungsi untuk menampilkan satu item"""
     if(database):
         id_item,kode_item,nama_item,harga_item,stock_item=database
