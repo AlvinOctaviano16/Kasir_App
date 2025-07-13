@@ -240,12 +240,12 @@ def cari_user(username:str):
                 connection.close()
     return None
             
-def create_new_transaction(transaksi:list):
+def create_new_transaction(transaksi:tuple):
     connection=create_Connection()
+    
     if connection is not None:
         try:
             kursor=connection.cursor()
-            id_transaksi,timestamp_transaksi,total_nominal_transaksi,id_user,status_transaksi=transaksi
             query_1=""
             return
         except:
