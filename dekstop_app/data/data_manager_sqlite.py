@@ -132,7 +132,7 @@ def mencari_item(kode:str):
     connection=create_Connection()
     if connection is not None:
         try:
-            # connection.row_factory=sqlite3.Row 
+            connection.row_factory=sqlite3.Row 
             kursor=connection.cursor()
             query="SELECT * FROM item WHERE kode_item=(?)"
             kursor.execute(query,(kode,))
@@ -179,6 +179,7 @@ def cari_user(username:str):
     connection=create_Connection()
     if connection is not None:
         try:
+            connection.row_factory=sqlite3.Row 
             kursor=connection.cursor()
             query="SELECT * FROM user WHERE user_name=(?)"
             kursor.execute(query,(username,))

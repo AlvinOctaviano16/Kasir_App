@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import QApplication
-from ui import LoginWindow
 from data import *
 from ui import *
 from core import verifikasi_login
@@ -8,11 +7,6 @@ import bcrypt
 import sys
 
 def main():
-    verifikasi_login("Alvin Octaviano","Octaviano1907")
-
-    """Fungsi main untuk melakukan testing"""
-
-if __name__=="__main__":
     app = QApplication(sys.argv)
     
     # --- TERAPKAN STYLE & STYLESHEET ---
@@ -21,7 +15,16 @@ if __name__=="__main__":
     # --- SELESAI ---
 
     login_window = LoginWindow()
+    main_window=MainWindow()
+    
+    login_window.login_succes.connect(main_window.show)
+
     login_window.show()
     sys.exit(app.exec())
+
+    """Fungsi main untuk melakukan testing"""
+
+if __name__=="__main__":
+    main()
 
     
