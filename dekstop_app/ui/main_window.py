@@ -9,7 +9,13 @@ class MainWindow:
         loader=QUiLoader()
         self.ui=loader.load(UI_FILE,None)
         self.ui.setWindowTitle("Main Window")
+        self.current_user_info=None
 
+    def on_login_success(self,user_data):
+        """Informasi dari LoginWindow dan menjalankan main"""
+        self.current_user_info=user_data
+        self.show()
+        
     def show(self):
         """Fungsi untuk menampilkan window"""
         self.ui.show()

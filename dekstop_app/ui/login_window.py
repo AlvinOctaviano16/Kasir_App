@@ -9,7 +9,7 @@ from PySide6.QtGui import QIcon
 UI_FILE=os.path.join(os.path.dirname(__file__), 'login_window.ui')
 
 class LoginWindow(QObject):
-    login_succes=Signal()
+    login_succes=Signal(dict)
     def __init__(self):
         super().__init__()
         loader=QUiLoader()
@@ -50,15 +50,15 @@ class LoginWindow(QObject):
         password = self.password_input.text() if self.password_input else ""
 
         if not username or not password:
-            QMessageBox.warning(self.ui,"Error","Usernam dan Password tidak boleh kosong")
+            QMessageBox.warning(self.ui,"Error","Username dan Password tidak boleh kosong")
             return
 
         user_data=verifikasi_login(username,password) 
 
         if user_data:
             print(f"Login berhasil sebagai {user_data['username']} dengan role {user_data['role']}.")  
-            self.login_succes.emit()
+            self.login_succes.emit(user_data)
             self.close()
         else:
-            QMessageBox.critical(self.ui,"Login Gagal","Usernam atau Password salah!")
+            QMessageBox.critical(self.ui,"Login Gagal","Username atau Password salah!")
         

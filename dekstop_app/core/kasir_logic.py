@@ -1,4 +1,4 @@
-from data import data_manager_sqlite as db
+from data import cari_user,add_user,mencari_item_kode
 import bcrypt
 
 def register_new_user(username:str,password:str,role:str):
@@ -11,12 +11,12 @@ def register_new_user(username:str,password:str,role:str):
     salt=bcrypt.gensalt()
     hasil_hashed=bcrypt.hashpw(password_bytes,salt)
 
-    connection=db.add_user(username,hasil_hashed,role)
+    connection=add_user(username,hasil_hashed,role)
     return connection
 
 def verifikasi_login(username:str,password:str):
     """Fungsi untuk login"""
-    user_data=db.cari_user(username)
+    user_data=cari_user(username)
     if user_data:
         user_id,user_name,hash_password,role=user_data
         password_bytes=password.encode('utf-8')
@@ -28,3 +28,8 @@ def verifikasi_login(username:str,password:str):
             return None
     print("Tidak dapat menemukan akun dengan username tersebut")    
     return None
+
+def mencari_item_kode_logic(kode:str):
+    """Mencari item menggunakan kode_item"""
+    item=mencari_item_kode(kode)
+    return item

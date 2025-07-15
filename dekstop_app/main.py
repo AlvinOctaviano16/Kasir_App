@@ -17,7 +17,7 @@ def main():
     login_window = LoginWindow()
     main_window=MainWindow()
     
-    login_window.login_succes.connect(main_window.show)
+    login_window.login_succes.connect(main_window.on_login_success)
 
     login_window.show()
     sys.exit(app.exec())
