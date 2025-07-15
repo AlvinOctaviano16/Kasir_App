@@ -15,7 +15,7 @@ class MainWindow:
         """Informasi dari LoginWindow dan menjalankan main"""
         self.current_user_info=user_data
         self.show()
-        
+
     def show(self):
         """Fungsi untuk menampilkan window"""
         self.ui.show()
@@ -23,3 +23,6 @@ class MainWindow:
     def close(self):
         """Fungsi untuk menutup window"""
         self.ui.close()
+
+    def setup_tabs(self):
+        """Fungsi untuk mengatur tiap tab yang ada """

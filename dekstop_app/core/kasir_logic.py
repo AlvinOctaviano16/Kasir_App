@@ -22,7 +22,7 @@ def verifikasi_login(username:str,password:str):
         password_bytes=password.encode('utf-8')
         if bcrypt.checkpw(password_bytes,hash_password):
             print("Berhasil melakukan login")
-            return {"id":user_id, "username":user_name, "role":role}
+            return {"id_user":user_id, "user_name":user_name, "role":role}
         else:
             print("Password Anda salah")
             return None

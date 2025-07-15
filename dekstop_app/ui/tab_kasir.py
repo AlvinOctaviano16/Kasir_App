@@ -3,7 +3,7 @@ from data import data_manager_sqlite
 from PySide6.QtWidgets import QPushButton,QLineEdit,QTableWidget,QSpinBox,QMessageBox
 
 class KasirTabHander:
-    def __init__(self,tab_widget):
+    def __init__(self,tab_widget,user_id):
         self.parent_tab= tab_widget
         self.keranjang=[]
-        self
+        self.current_user_id= user_id
