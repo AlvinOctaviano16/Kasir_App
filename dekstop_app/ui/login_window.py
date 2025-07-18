@@ -56,7 +56,7 @@ class LoginWindow(QObject):
         user_data=verifikasi_login(username,password) 
 
         if user_data:
-            print(f"Login berhasil sebagai {user_data['user_name']} dengan role {user_data['role']}.")  
+            print(f"Login berhasil sebagai {user_data['nama_user']} dengan role {user_data['role']}.")  
             self.login_succes.emit(user_data)
             self.close()
         else:

@@ -17,7 +17,7 @@ def menampilkan_satu_item(database:dict):
         print(f"|{kode_item:{10}} | {nama_item:{10}}  | {harga_item:{10}} | {stock_item:{10}}|")
         return True
     else:
-        print("Item tersebt tidak dapat ditemukan")
+        print("Item tersebut tidak dapat ditemukan")
     return False
 
     

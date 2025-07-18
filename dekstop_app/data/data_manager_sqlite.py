@@ -241,37 +241,40 @@ def cari_user(username:str):
                 connection.close()
     return None
             
-def create_new_transaction(transaksi:tuple):
+def create_new_transaction(data_transaksi:tuple):
     """Fungsi untuk membuat transaksi : akan mengisi table transaksi dan detail transaksi"""
     connection=create_Connection()
-    data_umum,keranjang_item=transaksi
-    id_user,total_nominal_transaksi,status_transaksi=data_umum
-    if connection is not None:
-        try:
-            kursor=connection.cursor()
-            id_transaksi_baru=str(uuid.uuid4())
-            query_transaksi="INSERT INTO transaksi(id_transaksi,total_nominal_transaksi,id_user,status_transaksi) VALUES (?,?,?,?)"
-            kursor.execute(query_transaksi,(id_transaksi_baru,total_nominal_transaksi,id_user,status_transaksi,))
-            query_detail="INSERT INTO detail_transaksi(id_transaksi,id_item,jumlah_item,nominal_saat_transaksi) VALUES (?,?,?,?)"
-            query_stok="UPDATE item SET stok_item=stok_item-(?) WHERE id_item=(?) AND stock_item>=(?)"
+    if not connection:
+        print("Gagal membuat koneksi")
+        return False,None
+    
+    try:
+        data_umum,keranjang_item=data_transaksi
+        id_user,total_nominal_transaksi,status_transaksi=data_umum
+        kursor=connection.cursor()
+        id_transaksi_baru=str(uuid.uuid4())
+        query_transaksi="INSERT INTO transaksi(id_transaksi,total_nominal_transaksi,id_user,status_transaksi) VALUES (?,?,?,?)"
+        kursor.execute(query_transaksi,(id_transaksi_baru,total_nominal_transaksi,id_user,status_transaksi,))
+        query_detail="INSERT INTO detail_transaksi(id_transaksi,id_item,jumlah_item,nominal_saat_transaksi) VALUES (?,?,?,?)"
+        query_stok="UPDATE item SET stock_item=stock_item-(?) WHERE id_item=(?) AND stock_item>=(?)"
 
-            for item in keranjang_item:
-                id_item,jumlah_item,nominal_saat_transaksi=item
-                kursor.execute(query_detail,(id_transaksi_baru,id_item,jumlah_item,nominal_saat_transaksi))
-                kursor.execute(query_stok,(jumlah_item,id_item,jumlah_item))
-                if kursor.rowcount==0:
-                    raise sqlite3.InternalError(f"stok untuk item {id_item} tidak mencukupi")
+        for item in keranjang_item:
+            id_item,jumlah_item,nominal_saat_transaksi=item
+            kursor.execute(query_detail,(id_transaksi_baru,id_item,jumlah_item,nominal_saat_transaksi))
+            kursor.execute(query_stok,(jumlah_item,id_item,jumlah_item))
+            if kursor.rowcount==0:
+                raise sqlite3.Error(f"stok untuk item {id_item} tidak mencukupi")
 
-            connection.commit()
-            print(f"Transaksi {id_transaksi_baru} berhasil dibuat")
-            return True, id_transaksi_baru
-        except sqlite3.Error as e:
-            print(f"Terjadi kesalahan, transaksi gagal : {e}")
-            connection.rollback()
-            return False, None
-        finally:
-            if connection:
-                connection.close()
+        connection.commit()
+        print(f"Transaksi {id_transaksi_baru} berhasil dibuat")
+        return True, id_transaksi_baru
+    except sqlite3.Error as e:
+        print(f"Terjadi kesalahan, transaksi gagal : {e}")
+        connection.rollback()
+        return False, None
+    finally:
+        if connection:
+            connection.close()
     
 
 
