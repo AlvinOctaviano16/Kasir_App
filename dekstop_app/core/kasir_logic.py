@@ -43,7 +43,7 @@ def proses_transaksi(id_user:int,keranjang:list,total_nominal_transaksi:int):
     try:
         # if data_transaksi is not None:
         database=[
-            (item['id_item'],item['jumlah_item'],item['nominal_saat_transaksi'])
+            (item['id_item'],item['kode_item'],item['nama_item'],item['jumlah_item'],item['nominal_saat_transaksi'])
             for item in keranjang
         ]
         data_umum=(id_user,total_nominal_transaksi, "Selesai")

@@ -255,12 +255,12 @@ def create_new_transaction(data_transaksi:tuple):
         id_transaksi_baru=str(uuid.uuid4())
         query_transaksi="INSERT INTO transaksi(id_transaksi,total_nominal_transaksi,id_user,status_transaksi) VALUES (?,?,?,?)"
         kursor.execute(query_transaksi,(id_transaksi_baru,total_nominal_transaksi,id_user,status_transaksi,))
-        query_detail="INSERT INTO detail_transaksi(id_transaksi,id_item,jumlah_item,nominal_saat_transaksi) VALUES (?,?,?,?)"
+        query_detail="INSERT INTO detail_transaksi(id_transaksi,id_item,kode_item,nama_item,jumlah_item,nominal_saat_transaksi) VALUES (?,?,?,?,?,?)"
         query_stok="UPDATE item SET stock_item=stock_item-(?) WHERE id_item=(?) AND stock_item>=(?)"
 
         for item in keranjang_item:
-            id_item,jumlah_item,nominal_saat_transaksi=item
-            kursor.execute(query_detail,(id_transaksi_baru,id_item,jumlah_item,nominal_saat_transaksi))
+            id_item,kode_item,nama_item,jumlah_item,nominal_saat_transaksi=item
+            kursor.execute(query_detail,(id_transaksi_baru,id_item,kode_item,nama_item,jumlah_item,nominal_saat_transaksi))
             kursor.execute(query_stok,(jumlah_item,id_item,jumlah_item))
             if kursor.rowcount==0:
                 raise sqlite3.Error(f"stok untuk item {id_item} tidak mencukupi")

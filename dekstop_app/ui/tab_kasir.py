@@ -64,8 +64,8 @@ class KasirTabHandler:
             self.jumlah_item.setValue(1)
             self.jumlah_item.setFocus()
         else:
-            self.nama_item_output.setClear()
-            self.harga_item_output.setClear()
+            self.nama_item_output.clear()
+            self.harga_item_output.clear()
             QMessageBox.warning(self.parent_tab, "Error", f"Item dengan kode '{input_section}' tidak ditemukan.")
 
     def tambah_ke_keranjang(self):
